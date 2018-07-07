@@ -9,6 +9,13 @@
 #import "ViewController.h"
 #import "StudyModel.h"
 
+typedef struct {
+    CGFloat x, y, width, height;
+} TheRect;
+typedef struct __attribute__((objc_boxable)) {
+    CGFloat x, y, width, height;
+} FWRect;
+
 static void cleanUpBlock(__strong void(^*block)(void)) {
     (*block)();
 }
@@ -22,9 +29,18 @@ static void cleanUpBlock(__strong void(^*block)(void)) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    [self boxAble];
     [self cleanUpStudy];
     [self studyOverloadable];
     [self studyModel];
+}
+
+-(void)boxAble {
+    TheRect rect1 = {1, 2, 3, 4};
+    NSValue *value1 = @(rect1);
+    FWRect rect2 = {1, 2, 3, 4};
+    NSValue *value2 = @(rect2);
+    NSLog(@"%@ %@",value1,value2);
 }
 
 -(void)cleanUpStudy {
